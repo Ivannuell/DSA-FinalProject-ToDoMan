@@ -23,11 +23,6 @@ inline System::Void Prototype_Model::MyMainMenu::button4_Click(System::Object^ s
 	if (toRemove < 0) {
 		MessageBox::Show("You need to select an item first");
 	}
-	else {
-		listBox1->Items->RemoveAt(toRemove);
-		task_file.removeFromFile(toRemove);
-	}
-}
 
 inline System::Void Prototype_Model::MyMainMenu::button5_Click(System::Object^ sender, System::EventArgs^ e) {
 	/*EditTask^ edit_Task = gcnew EditTask();
@@ -104,12 +99,4 @@ inline System::Void Prototype_Model::MyMainMenu::button3_Click(System::Object^ s
 
 // Utility Functions
 
-int Prototype_Model::MyMainMenu::displayAll() {
-	listBox1->Items->Clear();
-	int max = task_file.getLineNum();
-	for (int i = 1; i < max; i++) {
-		listBox1->Items->Add(marshal_as<String^>(task_file.getFromFile(i)));
-	}
-	return max;
-}
 
