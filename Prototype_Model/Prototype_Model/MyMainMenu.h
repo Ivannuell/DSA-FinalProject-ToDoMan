@@ -397,8 +397,8 @@ namespace Prototype_Model {
 			this->ControlBox = false;
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->panel2);
-			this->Controls->Add(this->panel5);
 			this->Controls->Add(this->panel4);
+			this->Controls->Add(this->panel5);
 			this->Name = L"MyMainMenu";
 			this->ShowIcon = false;
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
