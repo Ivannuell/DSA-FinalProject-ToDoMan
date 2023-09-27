@@ -19,16 +19,11 @@ inline System::Void Prototype_Model::MyMainMenu::MyMainMenu_FormClosing(System::
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button4_Click(System::Object^ sender, System::EventArgs^ e) {
-	int toRemove = listBox1->SelectedIndex;
-	if (toRemove < 0) {
-		MessageBox::Show("You need to select an item first");
-	}
+
+}
 
 inline System::Void Prototype_Model::MyMainMenu::button5_Click(System::Object^ sender, System::EventArgs^ e) {
-	/*EditTask^ edit_Task = gcnew EditTask();
-	panel1->Show();
-	panel1->Controls->Add(edit_Task);
-	edit_Task->*/
+
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button6_Click(System::Object^ sender, System::EventArgs^ e) {

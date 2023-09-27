@@ -39,7 +39,7 @@ namespace Prototype_Model {
 		}
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::ListBox^ listBox1;
+
 	private: System::Windows::Forms::Button^ button3;
 	private: System::Windows::Forms::Button^ button4;
 	private: System::Windows::Forms::Button^ button5;
@@ -87,7 +87,6 @@ namespace Prototype_Model {
 		{
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button5 = (gcnew System::Windows::Forms::Button());
@@ -109,8 +108,8 @@ namespace Prototype_Model {
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->panel5 = (gcnew System::Windows::Forms::Panel());
-			this->button9 = (gcnew System::Windows::Forms::Button());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->button9 = (gcnew System::Windows::Forms::Button());
 			this->panel2->SuspendLayout();
 			this->flowLayoutPanel1->SuspendLayout();
 			this->panel3->SuspendLayout();
@@ -143,17 +142,6 @@ namespace Prototype_Model {
 			this->button2->Text = L"Add Task";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MyMainMenu::button2_Click);
-			// 
-			// listBox1
-			// 
-			this->listBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->listBox1->FormattingEnabled = true;
-			this->listBox1->ItemHeight = 20;
-			this->listBox1->Location = System::Drawing::Point(219, 256);
-			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(647, 124);
-			this->listBox1->TabIndex = 2;
 			// 
 			// button3
 			// 
@@ -364,23 +352,12 @@ namespace Prototype_Model {
 			this->panel5->Controls->Add(this->button6);
 			this->panel5->Controls->Add(this->button3);
 			this->panel5->Controls->Add(this->button4);
-			this->panel5->Controls->Add(this->listBox1);
 			this->panel5->Controls->Add(this->button5);
 			this->panel5->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->panel5->Location = System::Drawing::Point(0, 0);
 			this->panel5->Name = L"panel5";
 			this->panel5->Size = System::Drawing::Size(1370, 595);
 			this->panel5->TabIndex = 5;
-			// 
-			// button9
-			// 
-			this->button9->Location = System::Drawing::Point(35, 273);
-			this->button9->Name = L"button9";
-			this->button9->Size = System::Drawing::Size(75, 23);
-			this->button9->TabIndex = 3;
-			this->button9->Text = L"ParseTest";
-			this->button9->UseVisualStyleBackColor = true;
-			this->button9->Click += gcnew System::EventHandler(this, &MyMainMenu::button9_Click);
 			// 
 			// tableLayoutPanel1
 			// 
@@ -401,6 +378,16 @@ namespace Prototype_Model {
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
 			this->tableLayoutPanel1->Size = System::Drawing::Size(618, 164);
 			this->tableLayoutPanel1->TabIndex = 4;
+			// 
+			// button9
+			// 
+			this->button9->Location = System::Drawing::Point(35, 273);
+			this->button9->Name = L"button9";
+			this->button9->Size = System::Drawing::Size(75, 23);
+			this->button9->TabIndex = 3;
+			this->button9->Text = L"ParseTest";
+			this->button9->UseVisualStyleBackColor = true;
+			this->button9->Click += gcnew System::EventHandler(this, &MyMainMenu::button9_Click);
 			// 
 			// MyMainMenu
 			// 
