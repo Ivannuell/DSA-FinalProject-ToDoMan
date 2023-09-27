@@ -101,22 +101,6 @@ inline System::Void Prototype_Model::MyMainMenu::button3_Click(System::Object^ s
 		tableLayoutPanel1->Controls->Add(display_output);
 	}
 }
-	//ListBox
-	/*listBox1->Items->Clear();
-	for (int i = 0; i < task_file.getLineNum() * 2; i += 2) {
-		String^ var1 = marshal_as<String^>(task_file.getParsedFromFile(':', i));
-		String^ var2 = marshal_as<String^>(task_file.getParsedFromFile(':', i + 1));
-		listBox1->Items->Add(System::String::Concat(var1, "\t\t", var2));
-	}*/
-
-	//Whole line ListBox
-	/*listBox1->Items->Clear();
-	int max = task_file.getLineNum();
-	if (displayAll() == 1) {
-		MessageBox::Show("Empty File.");
-	}*/
-//}
-
 
 // Utility Functions
 
