@@ -86,7 +86,7 @@ inline System::Void Prototype_Model::MyMainMenu::button2_Click(System::Object^ s
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button3_Click(System::Object^ sender, System::EventArgs^ e) {
-
+	tableLayoutPanel1->Controls->Clear();
 
 	for (int i = 0; i < task_file.getLineNum() * 2; i++) {
 		System::Windows::Forms::Label^ display_output = gcnew System::Windows::Forms::Label();
