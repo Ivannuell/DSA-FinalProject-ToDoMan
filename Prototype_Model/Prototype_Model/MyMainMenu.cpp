@@ -24,12 +24,6 @@ inline System::Void Prototype_Model::MyMainMenu::button4_Click(System::Object^ s
 
 inline System::Void Prototype_Model::MyMainMenu::button5_Click(System::Object^ sender, System::EventArgs^ e) {
 
-	panel1->Show();
-	panel1->Controls->Add(edit_Task);
-	edit_Task->*/
-	panel1->Show();
-	panel1->Controls->Add(edit_Task);
-	edit_Task->*/
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button6_Click(System::Object^ sender, System::EventArgs^ e) {
