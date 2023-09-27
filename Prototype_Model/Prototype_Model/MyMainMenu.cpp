@@ -54,6 +54,7 @@ inline System::Void Prototype_Model::MyMainMenu::button7_Click(System::Object^ s
 		) {
 		MessageBox::Show("Something went wrong while writing to file.");
 	}
+
 	panel5->Enabled = true;
 	panel4->Hide();
 }
