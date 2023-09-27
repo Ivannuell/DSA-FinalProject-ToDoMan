@@ -8,8 +8,6 @@ using namespace msclr::interop;
 
 DatabaseHandler task_file{ ".\\Database\\Task.txt" };
 
-
-
 inline System::Void Prototype_Model::MyMainMenu::button1_Click(System::Object^ sender, System::EventArgs^ e) {
 	Application::Exit();
 }
@@ -27,6 +25,28 @@ inline System::Void Prototype_Model::MyMainMenu::button5_Click(System::Object^ s
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button6_Click(System::Object^ sender, System::EventArgs^ e) {
+	String^ h_num;
+	for (int i = 0; i < 24; i++) {
+		Label^ hour = gcnew Label();
+		hour->AutoSize = false;
+		hour->Margin = System::Windows::Forms::Padding(0);
+		hour->Size = System::Drawing::Size(80, 20);
+		hour->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+		hour->Location = System::Drawing::Point(80 * i, 4);
+		if (i < 6)
+			h_num = System::String::Concat((i + 7), ":00", " AM");
+		else if (i < 18)
+			h_num = System::String::Concat((i - 5), ":00", " PM");
+		else
+			h_num = System::String::Concat((i - 17), ":00", " AM");
+
+		hour->Text = h_num;
+		hour->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
+		panel3->Controls->Add(hour);
+	}
+
+
+
 	if (panel2->Visible) {
 		flowLayoutPanel1->Controls->Clear();
 		panel2->Hide();
@@ -34,6 +54,7 @@ inline System::Void Prototype_Model::MyMainMenu::button6_Click(System::Object^ s
 	else {
 		panel2->Show();
 		std::string tasks[] = { "First Title", "Second Title", "Third Title","First Title", "Second Title", "Third Title", "First Title", "Second Title", "Third Title" };
+
 		for (int i = 0; i < 9; i++) {
 			individual_Task^ userControl = gcnew individual_Task();
 			userControl->setTitle(tasks[i]);
@@ -68,6 +89,10 @@ inline System::Void Prototype_Model::MyMainMenu::button9_Click(System::Object^ s
 
 }
 
+inline System::Void Prototype_Model::MyMainMenu::button9_Click_1(System::Object^ sender, System::EventArgs^ e) {
+
+}
+
 inline System::Void Prototype_Model::MyMainMenu::button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (!panel4->Visible) {
 		panel4->Show();
@@ -78,8 +103,10 @@ inline System::Void Prototype_Model::MyMainMenu::button2_Click(System::Object^ s
 
 inline System::Void Prototype_Model::MyMainMenu::button3_Click(System::Object^ sender, System::EventArgs^ e) {
 	tableLayoutPanel1->Controls->Clear();
+	//tableLayoutPanel1->Size = Drawing::Size(1122, task_file.getLineNum() * 20);
 
 	for (int i = 0; i < (task_file.getLineNum() * 3) - 3; i++) {
+		tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 25)));
 		System::Windows::Forms::Label^ display_output = gcnew System::Windows::Forms::Label();
 		String^ var1 = marshal_as<String^>(task_file.getParsedFromFile('|', i));
 

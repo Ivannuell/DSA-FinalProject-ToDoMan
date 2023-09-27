@@ -90,11 +90,10 @@ namespace Prototype_Model {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->panel1);
 			this->Name = L"individual_Task";
-			this->Size = System::Drawing::Size(968, 49);
+			this->Size = System::Drawing::Size(970, 51);
 			this->panel1->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
