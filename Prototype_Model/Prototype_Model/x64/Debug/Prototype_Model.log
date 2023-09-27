@@ -1,3 +1,6 @@
-﻿  MyMainMenu.cpp
+﻿  MyForm.cpp
+C:\Users\Ivann\Documents\School Related\Data struct\Final Project\Project Repo\Prototype_Model\Prototype_Model\MyForm.cpp(10,33): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
+  MyMainMenu.cpp
+  Generating Code...
   DatabaseHandler.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  Prototype_Model.vcxproj -> C:\Users\Ivann\source\repos\Prototype_Model\x64\Debug\Prototype_Model.exe
+  Prototype_Model.vcxproj -> C:\Users\Ivann\Documents\School Related\Data struct\Final Project\Project Repo\Prototype_Model\x64\Debug\Prototype_Model.exe

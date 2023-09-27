@@ -1,0 +1,10 @@
+# Ignore compiled files
+*.exe
+*.dll
+*.so
+*.o
+
+# Ignore log files and temporary files
+*.log
+*.VC.*
+

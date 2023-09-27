@@ -61,7 +61,6 @@ namespace Prototype_Model {
 			// 
 			// panel1
 			// 
-			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 			this->panel1->Controls->Add(this->panel2);
 			this->panel1->Location = System::Drawing::Point(4, 4);
 			this->panel1->Name = L"panel1";

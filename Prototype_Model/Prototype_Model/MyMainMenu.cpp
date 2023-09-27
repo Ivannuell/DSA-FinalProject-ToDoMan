@@ -46,7 +46,8 @@ inline System::Void Prototype_Model::MyMainMenu::button6_Click(System::Object^ s
 inline System::Void Prototype_Model::MyMainMenu::button7_Click(System::Object^ sender, System::EventArgs^ e) {
 	String^ title = textBox1->Text;
 	String^ descrip = textBox2->Text;
-	std::string data = marshal_as<std::string>(System::String::Concat(title, ":", descrip, ":", "\r\n"));
+	String^ time = dateTimePicker1->Value.ToString("MMMM dd, hh:mm:tt");
+	std::string data = marshal_as<std::string>(System::String::Concat(time, "|", title, "|", descrip, "|", "\r\n"));
 
 	if (
 		!task_file.addToFile(data)
@@ -78,13 +79,13 @@ inline System::Void Prototype_Model::MyMainMenu::button2_Click(System::Object^ s
 inline System::Void Prototype_Model::MyMainMenu::button3_Click(System::Object^ sender, System::EventArgs^ e) {
 	tableLayoutPanel1->Controls->Clear();
 
-	for (int i = 0; i < task_file.getLineNum() * 2; i++) {
+	for (int i = 0; i < (task_file.getLineNum() * 3) - 3; i++) {
 		System::Windows::Forms::Label^ display_output = gcnew System::Windows::Forms::Label();
-		String^ var1 = marshal_as<String^>(task_file.getParsedFromFile(':', i));
+		String^ var1 = marshal_as<String^>(task_file.getParsedFromFile('|', i));
+
 		display_output->Text = (var1->Trim());
 		display_output->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 		display_output->Font = gcnew System::Drawing::Font("Arial", 10);
-		display_output->BorderStyle = BorderStyle::FixedSingle;
 		display_output->Anchor = AnchorStyles::Left;
 		display_output->AutoSize = true;
 

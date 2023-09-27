@@ -63,8 +63,11 @@ namespace Prototype_Model {
 	private: System::Windows::Forms::Label^ label8;
 	private: System::Windows::Forms::TextBox^ textBox2;
 	private: System::Windows::Forms::Button^ button8;
-	private: System::Windows::Forms::Button^ button9;
+
 	private: System::Windows::Forms::TableLayoutPanel^ tableLayoutPanel1;
+	private: System::Windows::Forms::DateTimePicker^ dateTimePicker1;
+	private: System::Windows::Forms::Label^ label9;
+	private: System::Windows::Forms::Label^ label10;
 
 
 
@@ -99,17 +102,19 @@ namespace Prototype_Model {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel4 = (gcnew System::Windows::Forms::Panel());
+			this->dateTimePicker1 = (gcnew System::Windows::Forms::DateTimePicker());
 			this->button8 = (gcnew System::Windows::Forms::Button());
 			this->button7 = (gcnew System::Windows::Forms::Button());
+			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->panel5 = (gcnew System::Windows::Forms::Panel());
 			this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
-			this->button9 = (gcnew System::Windows::Forms::Button());
 			this->panel2->SuspendLayout();
 			this->flowLayoutPanel1->SuspendLayout();
 			this->panel3->SuspendLayout();
@@ -185,23 +190,27 @@ namespace Prototype_Model {
 			// 
 			// panel2
 			// 
+			this->panel2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->panel2->AutoSize = true;
 			this->panel2->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->panel2->Controls->Add(this->flowLayoutPanel1);
-			this->panel2->Controls->Add(this->label1);
-			this->panel2->Location = System::Drawing::Point(13, 422);
+			this->panel2->Controls->Add(this->label10);
+			this->panel2->Location = System::Drawing::Point(217, 226);
 			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(1003, 644);
+			this->panel2->Size = System::Drawing::Size(1130, 344);
 			this->panel2->TabIndex = 4;
 			// 
 			// flowLayoutPanel1
 			// 
+			this->flowLayoutPanel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->flowLayoutPanel1->AutoScroll = true;
 			this->flowLayoutPanel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->flowLayoutPanel1->Controls->Add(this->panel3);
 			this->flowLayoutPanel1->Location = System::Drawing::Point(3, 39);
 			this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
-			this->flowLayoutPanel1->Size = System::Drawing::Size(995, 600);
+			this->flowLayoutPanel1->Size = System::Drawing::Size(1122, 300);
 			this->flowLayoutPanel1->TabIndex = 1;
 			// 
 			// panel3
@@ -267,34 +276,58 @@ namespace Prototype_Model {
 			this->label2->Text = L"7:00 AM";
 			this->label2->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
+			// label10
+			// 
+			this->label10->AutoSize = true;
+			this->label10->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label10->Location = System::Drawing::Point(373, -1);
+			this->label10->Name = L"label10";
+			this->label10->Size = System::Drawing::Size(201, 36);
+			this->label10->TabIndex = 0;
+			this->label10->Text = L"Visualizinator";
+			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(373, 0);
+			this->label1->Location = System::Drawing::Point(619, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(201, 36);
+			this->label1->Size = System::Drawing::Size(143, 36);
 			this->label1->TabIndex = 0;
-			this->label1->Text = L"Visualizinator";
+			this->label1->Text = L"Overview";
 			// 
 			// panel4
 			// 
 			this->panel4->BackColor = System::Drawing::SystemColors::ActiveCaption;
+			this->panel4->Controls->Add(this->dateTimePicker1);
 			this->panel4->Controls->Add(this->button8);
 			this->panel4->Controls->Add(this->button7);
+			this->panel4->Controls->Add(this->label9);
 			this->panel4->Controls->Add(this->label8);
 			this->panel4->Controls->Add(this->textBox2);
 			this->panel4->Controls->Add(this->label7);
 			this->panel4->Controls->Add(this->textBox1);
-			this->panel4->Location = System::Drawing::Point(250, 95);
+			this->panel4->Location = System::Drawing::Point(9, 43);
 			this->panel4->Name = L"panel4";
-			this->panel4->Size = System::Drawing::Size(338, 141);
+			this->panel4->Size = System::Drawing::Size(348, 164);
 			this->panel4->TabIndex = 3;
+			// 
+			// dateTimePicker1
+			// 
+			this->dateTimePicker1->AllowDrop = true;
+			this->dateTimePicker1->CustomFormat = L"MMMM dd, hh:mm:tt";
+			this->dateTimePicker1->Format = System::Windows::Forms::DateTimePickerFormat::Custom;
+			this->dateTimePicker1->Location = System::Drawing::Point(76, 84);
+			this->dateTimePicker1->Name = L"dateTimePicker1";
+			this->dateTimePicker1->ShowUpDown = true;
+			this->dateTimePicker1->Size = System::Drawing::Size(155, 20);
+			this->dateTimePicker1->TabIndex = 3;
 			// 
 			// button8
 			// 
-			this->button8->Location = System::Drawing::Point(156, 85);
+			this->button8->Location = System::Drawing::Point(156, 131);
 			this->button8->Name = L"button8";
 			this->button8->Size = System::Drawing::Size(75, 23);
 			this->button8->TabIndex = 2;
@@ -304,13 +337,22 @@ namespace Prototype_Model {
 			// 
 			// button7
 			// 
-			this->button7->Location = System::Drawing::Point(75, 85);
+			this->button7->Location = System::Drawing::Point(75, 131);
 			this->button7->Name = L"button7";
 			this->button7->Size = System::Drawing::Size(75, 23);
 			this->button7->TabIndex = 2;
 			this->button7->Text = L"Add";
 			this->button7->UseVisualStyleBackColor = true;
 			this->button7->Click += gcnew System::EventHandler(this, &MyMainMenu::button7_Click);
+			// 
+			// label9
+			// 
+			this->label9->AutoSize = true;
+			this->label9->Location = System::Drawing::Point(20, 84);
+			this->label9->Name = L"label9";
+			this->label9->Size = System::Drawing::Size(49, 13);
+			this->label9->TabIndex = 1;
+			this->label9->Text = L"Deadline";
 			// 
 			// label8
 			// 
@@ -346,14 +388,16 @@ namespace Prototype_Model {
 			// 
 			// panel5
 			// 
+			this->panel5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->panel5->Controls->Add(this->tableLayoutPanel1);
-			this->panel5->Controls->Add(this->button9);
+			this->panel5->Controls->Add(this->label1);
+			this->panel5->Controls->Add(this->panel2);
 			this->panel5->Controls->Add(this->button2);
 			this->panel5->Controls->Add(this->button6);
 			this->panel5->Controls->Add(this->button3);
 			this->panel5->Controls->Add(this->button4);
 			this->panel5->Controls->Add(this->button5);
-			this->panel5->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->panel5->Location = System::Drawing::Point(0, 0);
 			this->panel5->Name = L"panel5";
 			this->panel5->Size = System::Drawing::Size(1370, 595);
@@ -363,31 +407,25 @@ namespace Prototype_Model {
 			// 
 			this->tableLayoutPanel1->AutoSize = true;
 			this->tableLayoutPanel1->CellBorderStyle = System::Windows::Forms::TableLayoutPanelCellBorderStyle::Single;
-			this->tableLayoutPanel1->ColumnCount = 2;
+			this->tableLayoutPanel1->ColumnCount = 3;
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				31.06796F)));
+				48.47397F)));
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				68.93204F)));
-			this->tableLayoutPanel1->Location = System::Drawing::Point(219, 12);
+				51.52603F)));
+			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
+				568)));
+			this->tableLayoutPanel1->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->tableLayoutPanel1->Location = System::Drawing::Point(217, 43);
 			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
 			this->tableLayoutPanel1->RightToLeft = System::Windows::Forms::RightToLeft::No;
 			this->tableLayoutPanel1->RowCount = 4;
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
+			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25.15337F)));
+			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 23.92638F)));
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
-			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
-			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
-			this->tableLayoutPanel1->Size = System::Drawing::Size(618, 164);
+			this->tableLayoutPanel1->Size = System::Drawing::Size(1126, 164);
 			this->tableLayoutPanel1->TabIndex = 4;
-			// 
-			// button9
-			// 
-			this->button9->Location = System::Drawing::Point(35, 273);
-			this->button9->Name = L"button9";
-			this->button9->Size = System::Drawing::Size(75, 23);
-			this->button9->TabIndex = 3;
-			this->button9->Text = L"ParseTest";
-			this->button9->UseVisualStyleBackColor = true;
-			this->button9->Click += gcnew System::EventHandler(this, &MyMainMenu::button9_Click);
+			this->tableLayoutPanel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyMainMenu::tableLayoutPanel1_Paint);
 			// 
 			// MyMainMenu
 			// 
@@ -396,7 +434,6 @@ namespace Prototype_Model {
 			this->ClientSize = System::Drawing::Size(1370, 595);
 			this->ControlBox = false;
 			this->Controls->Add(this->button1);
-			this->Controls->Add(this->panel2);
 			this->Controls->Add(this->panel4);
 			this->Controls->Add(this->panel5);
 			this->Name = L"MyMainMenu";
@@ -414,13 +451,10 @@ namespace Prototype_Model {
 			this->panel5->ResumeLayout(false);
 			this->panel5->PerformLayout();
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion
 		System::Collections::Generic::List<bool>^ originalEnabledStates = gcnew System::Collections::Generic::List<bool>();
-
-	private: int displayAll();
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e);
@@ -431,5 +465,7 @@ namespace Prototype_Model {
 	private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e);
-	};
+	private: System::Void tableLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+	}
+};
 }
