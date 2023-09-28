@@ -23,7 +23,8 @@ namespace Prototype_Model {
 			//TODO: Add the constructor code here
 			//
 			panel2->Hide();
-			panel4->Hide(); 
+			panel4->Hide();
+			refreshData_Table();
 		}
 
 	protected:
@@ -40,7 +41,7 @@ namespace Prototype_Model {
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ button2;
 
-	private: System::Windows::Forms::Button^ button3;
+
 	private: System::Windows::Forms::Button^ button4;
 	private: System::Windows::Forms::Button^ button5;
 
@@ -72,6 +73,8 @@ namespace Prototype_Model {
 	private: System::Windows::Forms::Panel^ panel3;
 	private: System::Windows::Forms::DateTimePicker^ dateTimePicker2;
 	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::DateTimePicker^ dateTimePicker3;
 
 
 	protected:
@@ -91,11 +94,12 @@ namespace Prototype_Model {
 		{
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->button6 = (gcnew System::Windows::Forms::Button());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
+			this->dateTimePicker3 = (gcnew System::Windows::Forms::DateTimePicker());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
 			this->label10 = (gcnew System::Windows::Forms::Label());
@@ -147,19 +151,9 @@ namespace Prototype_Model {
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MyMainMenu::button2_Click);
 			// 
-			// button3
-			// 
-			this->button3->Location = System::Drawing::Point(12, 80);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(188, 28);
-			this->button3->TabIndex = 1;
-			this->button3->Text = L"Show All";
-			this->button3->UseVisualStyleBackColor = true;
-			this->button3->Click += gcnew System::EventHandler(this, &MyMainMenu::button3_Click);
-			// 
 			// button4
 			// 
-			this->button4->Location = System::Drawing::Point(11, 114);
+			this->button4->Location = System::Drawing::Point(13, 80);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(188, 28);
 			this->button4->TabIndex = 1;
@@ -169,7 +163,7 @@ namespace Prototype_Model {
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(12, 148);
+			this->button5->Location = System::Drawing::Point(14, 114);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(188, 28);
 			this->button5->TabIndex = 1;
@@ -179,7 +173,7 @@ namespace Prototype_Model {
 			// 
 			// button6
 			// 
-			this->button6->Location = System::Drawing::Point(11, 182);
+			this->button6->Location = System::Drawing::Point(13, 148);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(188, 28);
 			this->button6->TabIndex = 1;
@@ -192,6 +186,8 @@ namespace Prototype_Model {
 			this->panel2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->panel2->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->panel2->Controls->Add(this->dateTimePicker3);
+			this->panel2->Controls->Add(this->label3);
 			this->panel2->Controls->Add(this->flowLayoutPanel1);
 			this->panel2->Controls->Add(this->label10);
 			this->panel2->Location = System::Drawing::Point(217, 248);
@@ -199,17 +195,35 @@ namespace Prototype_Model {
 			this->panel2->Size = System::Drawing::Size(1150, 344);
 			this->panel2->TabIndex = 4;
 			// 
+			// dateTimePicker3
+			// 
+			this->dateTimePicker3->CustomFormat = L"MMMM dd,  dddd";
+			this->dateTimePicker3->Format = System::Windows::Forms::DateTimePickerFormat::Custom;
+			this->dateTimePicker3->Location = System::Drawing::Point(6, 9);
+			this->dateTimePicker3->Name = L"dateTimePicker3";
+			this->dateTimePicker3->Size = System::Drawing::Size(167, 20);
+			this->dateTimePicker3->TabIndex = 3;
+			this->dateTimePicker3->ValueChanged += gcnew System::EventHandler(this, &MyMainMenu::dateTimePicker3_ValueChanged);
+			// 
+			// label3
+			// 
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label3->Location = System::Drawing::Point(3, 4);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(160, 31);
+			this->label3->TabIndex = 2;
+			this->label3->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
 			// flowLayoutPanel1
 			// 
 			this->flowLayoutPanel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Left | System::Windows::Forms::AnchorStyles::Right));
 			this->flowLayoutPanel1->AutoScroll = true;
-			this->flowLayoutPanel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->flowLayoutPanel1->Controls->Add(this->panel3);
 			this->flowLayoutPanel1->Location = System::Drawing::Point(3, 39);
 			this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
 			this->flowLayoutPanel1->Size = System::Drawing::Size(1137, 300);
 			this->flowLayoutPanel1->TabIndex = 1;
-			this->flowLayoutPanel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyMainMenu::flowLayoutPanel1_Paint);
 			// 
 			// panel3
 			// 
@@ -378,7 +392,6 @@ namespace Prototype_Model {
 			this->panel5->Controls->Add(this->panel2);
 			this->panel5->Controls->Add(this->button2);
 			this->panel5->Controls->Add(this->button6);
-			this->panel5->Controls->Add(this->button3);
 			this->panel5->Controls->Add(this->button4);
 			this->panel5->Controls->Add(this->button5);
 			this->panel5->Dock = System::Windows::Forms::DockStyle::Fill;
@@ -411,14 +424,14 @@ namespace Prototype_Model {
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 				33.92226F)));
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute,
-				494)));
+				506)));
 			this->tableLayoutPanel1->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->tableLayoutPanel1->Location = System::Drawing::Point(0, 0);
 			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
 			this->tableLayoutPanel1->RightToLeft = System::Windows::Forms::RightToLeft::No;
 			this->tableLayoutPanel1->RowCount = 1;
-			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 27)));
-			this->tableLayoutPanel1->Size = System::Drawing::Size(1147, 29);
+			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 31)));
+			this->tableLayoutPanel1->Size = System::Drawing::Size(1147, 33);
 			this->tableLayoutPanel1->TabIndex = 4;
 			// 
 			// MyMainMenu
@@ -449,7 +462,12 @@ namespace Prototype_Model {
 
 		}
 #pragma endregion
-		System::Collections::Generic::List<bool>^ originalEnabledStates = gcnew System::Collections::Generic::List<bool>();
+	//Custom Functions
+	private:
+		System::Void refreshData_Chart();
+		System::Void refreshData_Table();
+
+	//Control Functions
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e);
@@ -460,12 +478,7 @@ namespace Prototype_Model {
 	private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void tableLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-	}
-private: System::Void button9_Click_1(System::Object^ sender, System::EventArgs^ e);
-private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void flowLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-}
-};
+	private: System::Void button9_Click_1(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void dateTimePicker3_ValueChanged(System::Object^ sender, System::EventArgs^ e);
+	};
 }
