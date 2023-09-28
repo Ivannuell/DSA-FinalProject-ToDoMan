@@ -5,7 +5,6 @@
 #include "individual_Task.h"
 
 using namespace msclr::interop;
-
 DatabaseHandler task_file{ ".\\Database\\Task.txt" };
 
 inline System::Void Prototype_Model::MyMainMenu::button1_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -14,14 +13,6 @@ inline System::Void Prototype_Model::MyMainMenu::button1_Click(System::Object^ s
 
 inline System::Void Prototype_Model::MyMainMenu::MyMainMenu_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
 	Application::Exit();
-}
-
-inline System::Void Prototype_Model::MyMainMenu::button4_Click(System::Object^ sender, System::EventArgs^ e) {
-
-}
-
-inline System::Void Prototype_Model::MyMainMenu::button5_Click(System::Object^ sender, System::EventArgs^ e) {
-
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button6_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -61,15 +52,6 @@ inline System::Void Prototype_Model::MyMainMenu::button8_Click(System::Object^ s
 	panel4->Hide();
 }
 
-inline System::Void Prototype_Model::MyMainMenu::button9_Click(System::Object^ sender, System::EventArgs^ e) {
-
-
-}
-
-inline System::Void Prototype_Model::MyMainMenu::button9_Click_1(System::Object^ sender, System::EventArgs^ e) {
-
-}
-
 inline System::Void Prototype_Model::MyMainMenu::dateTimePicker3_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
 	refreshData_Chart();
 }
@@ -101,7 +83,6 @@ inline System::Void Prototype_Model::MyMainMenu::button3_Click(System::Object^ s
 }
 
 // Utility Functions
-
 inline System::Void Prototype_Model::MyMainMenu::refreshData_Chart() {
 	flowLayoutPanel1->Controls->Clear();
 	flowLayoutPanel1->Controls->Add(panel3);  //Container of hours
@@ -137,8 +118,8 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Chart() {
 		String^ value_D = dateTimePicker3->Value.ToString("dd");
 
 		//Date value - This value will determine which date to put the item.
-		size_t pos_M = timeSetted.find(' ');
-		size_t pos_D = timeSetted.find(',');
+		int pos_M = timeSetted.find(' ');
+		int pos_D = timeSetted.find(',');
 		String^ month = marshal_as<String^>(timeSetted.substr(0, pos_M))->Trim();
 		String^ day = marshal_as<String^>(timeSetted.substr(pos_M + 1, pos_D - (pos_M + 1)));
 
