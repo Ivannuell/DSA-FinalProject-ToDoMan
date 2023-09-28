@@ -62,9 +62,10 @@ namespace Prototype_Model {
 			// panel1
 			// 
 			this->panel1->Controls->Add(this->panel2);
-			this->panel1->Location = System::Drawing::Point(4, 4);
+			this->panel1->Location = System::Drawing::Point(0, 0);
+			this->panel1->Margin = System::Windows::Forms::Padding(0);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(960, 25);
+			this->panel1->Size = System::Drawing::Size(1920, 25);
 			this->panel1->TabIndex = 0;
 			// 
 			// panel2
@@ -72,7 +73,7 @@ namespace Prototype_Model {
 			this->panel2->BackColor = System::Drawing::Color::Red;
 			this->panel2->Location = System::Drawing::Point(0, 0);
 			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(40, 25);
+			this->panel2->Size = System::Drawing::Size(80, 25);
 			this->panel2->TabIndex = 0;
 			// 
 			// label1
@@ -80,7 +81,7 @@ namespace Prototype_Model {
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(1, 32);
+			this->label1->Location = System::Drawing::Point(3, 28);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(44, 16);
 			this->label1->TabIndex = 1;
@@ -93,7 +94,7 @@ namespace Prototype_Model {
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->panel1);
 			this->Name = L"individual_Task";
-			this->Size = System::Drawing::Size(970, 51);
+			this->Size = System::Drawing::Size(1930, 48);
 			this->panel1->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -102,5 +103,6 @@ namespace Prototype_Model {
 #pragma endregion
 	public: void setTitle(std::string);
 	public: void setTime(int);
+	public: void setDuration(int);
 	};
 }
