@@ -23,16 +23,45 @@ inline System::Void Prototype_Model::MyMainMenu::button6_Click(System::Object^ s
 	}
 	else {
 		panel2->Show();
-		refreshData_Chart();
+		refreshData_Visual_Chart();
 	}
 }
 
+inline System::Void Prototype_Model::MyMainMenu::OnFlowLayoutPanelMouseWheel(Object^ sender, MouseEventArgs^ e) {
+
+}
+
+inline System::Void Prototype_Model::MyMainMenu::button4_Click(System::Object^ sender, System::EventArgs^ e) {
+	//TODO: Open edit task tab
+	listBox1->Items->Clear();
+
+	if (panel6->Visible) {
+		panel6->Hide();
+	}
+	else {
+		panel6->BringToFront();
+		panel6->Show();
+		refreshData_Overview_Table();
+	}
+
+	refreshData_remove_list();
+}
+
+inline System::Void Prototype_Model::MyMainMenu::button3_Click_1(System::Object^ sender, System::EventArgs^ e) {
+	listBox1->Items->RemoveAt(listBox1->SelectedIndex);
+	task_file.removeFromFile(listBox1->SelectedIndex+1);
+	refreshData_remove_list();
+	refreshData_Overview_Table();
+	refreshData_Visual_Chart();
+}
+
 inline System::Void Prototype_Model::MyMainMenu::button7_Click(System::Object^ sender, System::EventArgs^ e) {
+
 	String^ title = textBox1->Text;
 	String^ descrip = textBox2->Text;
 	String^ timeEnd = dateTimePicker1->Value.ToString("MMMM dd, hh:mm:tt");
 	String^ timeStart = dateTimePicker2->Value.ToString("MMMM dd, hh:mm:tt");
-	std::string data = marshal_as<std::string>(System::String::Concat(timeStart, "|", timeEnd, "|", title, "|", descrip, "|", "\r\n"));
+	std::string data = marshal_as<std::string>(System::String::Concat(timeStart, "|", timeEnd, "|", title, "|", descrip, "|", "\n"));
 
 	if (
 		!task_file.addToFile(data)
@@ -42,9 +71,8 @@ inline System::Void Prototype_Model::MyMainMenu::button7_Click(System::Object^ s
 	panel5->Enabled = true;
 	panel4->Hide();
 
-	refreshData_Chart();
-	refreshData_Table();
-
+	refreshData_Visual_Chart();
+	refreshData_Overview_Table();
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button8_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -53,12 +81,14 @@ inline System::Void Prototype_Model::MyMainMenu::button8_Click(System::Object^ s
 }
 
 inline System::Void Prototype_Model::MyMainMenu::dateTimePicker3_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
-	refreshData_Chart();
+	refreshData_Visual_Chart();
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (!panel4->Visible) {
+		panel4->BringToFront();
 		panel4->Show();
+		panel6->Hide();
 		panel5->Enabled = false;
 		button2->Enabled = true;
 	}
@@ -83,8 +113,9 @@ inline System::Void Prototype_Model::MyMainMenu::button3_Click(System::Object^ s
 }
 
 // Utility Functions
-inline System::Void Prototype_Model::MyMainMenu::refreshData_Chart() {
+inline System::Void Prototype_Model::MyMainMenu::refreshData_Visual_Chart() {
 	flowLayoutPanel1->Controls->Clear();
+
 	flowLayoutPanel1->Controls->Add(panel3);  //Container of hours
 	String^ h_num;
 	//Hour labels being added
@@ -92,7 +123,7 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Chart() {
 		Label^ hour = gcnew Label();
 		hour->AutoSize = false;
 		hour->Margin = System::Windows::Forms::Padding(0);
-		hour->Size = System::Drawing::Size(80, 20);
+		hour->Size = System::Drawing::Size(80, 40);
 		hour->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
 		hour->Location = System::Drawing::Point(80 * i, 4);
 		if (i < 12)
@@ -127,8 +158,8 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Chart() {
 		int pos11 = timeSetted.find(',');
 		int pos22 = timeSetted.find(':');
 		int pos33 = timeSetted.find('|');
-		String^ final1 = marshal_as<String^>(timeSetted.substr(pos11 + 1, pos22 - (pos11 + 1)))->Trim();
-		String^ final2 = marshal_as<String^>(timeSetted.substr(pos22 + 1, pos33 - (pos22 + 1)))->Trim();
+		String^ final1 = marshal_as<String^>(timeSetted.substr(static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(pos11) + 1, pos22 - (static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(pos11) + 1)))->Trim();
+		String^ final2 = marshal_as<String^>(timeSetted.substr(static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(pos22) + 1, pos33 - (static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(pos22) + 1)))->Trim();
 		int timeS = Convert::ToInt16(final1);
 		if (final2 == "pm")
 			timeS += 12;
@@ -144,8 +175,6 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Chart() {
 			timeF += 12;
 
 		int duration;
-
-
 		bool isSettedPM = (timeS >= 12);
 		bool isEndPM = (timeF >= 12);
 
@@ -167,17 +196,18 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Chart() {
 		userControl->setTime(timeS - 1);
 		userControl->setDuration(duration);
 
-		if(month == value_M && day == value_D)
+		if (month == value_M && day == value_D)
 			flowLayoutPanel1->Controls->Add(userControl);
 	}
 }
 
-inline System::Void Prototype_Model::MyMainMenu::refreshData_Table() {
+inline System::Void Prototype_Model::MyMainMenu::refreshData_Overview_Table() {
 	tableLayoutPanel1->Controls->Clear();
 
 	for (int i = 0; i < (task_file.getLineNum() * 4) - 4; i++) {
 		tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 25)));
 		System::Windows::Forms::Label^ display_output = gcnew System::Windows::Forms::Label();
+
 		String^ var1 = marshal_as<String^>(task_file.getParsedFromFile('|', i));
 
 		display_output->Text = (var1->Trim());
@@ -190,3 +220,10 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Table() {
 	}
 }
 
+inline System::Void Prototype_Model::MyMainMenu::refreshData_remove_list() {
+	listBox1->Items->Clear();
+	for (int i = 1; i < task_file.getLineNum(); i++) {
+		String^ task = marshal_as<String^>(task_file.getFromFile(i))->Replace("|", "\t\t\t");
+		listBox1->Items->Add(task);
+	}
+}

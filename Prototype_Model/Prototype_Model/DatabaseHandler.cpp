@@ -3,13 +3,13 @@
 #include <vector>
 #include <fstream>
 
-bool DatabaseHandler::addToFile(const std::string& message)
+bool DatabaseHandler::addToFile(const std::string& data)
 {
 	std::fstream output;
 	output.open(filename, std::ios::app);
 	if (output.fail())
 		return false;
-	output << message;
+	output << data;
 	//output << message << std::endl;
 	output.close();
 	return true;

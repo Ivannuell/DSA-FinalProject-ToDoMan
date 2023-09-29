@@ -94,7 +94,7 @@ namespace Prototype_Model {
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->panel1);
 			this->Name = L"individual_Task";
-			this->Size = System::Drawing::Size(1930, 48);
+			this->Size = System::Drawing::Size(1930, 45);
 			this->panel1->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
