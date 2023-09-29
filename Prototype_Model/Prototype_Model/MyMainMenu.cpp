@@ -7,6 +7,17 @@
 using namespace msclr::interop;
 DatabaseHandler task_file{ ".\\Database\\Task.txt" };
 
+System::Void Prototype_Model::MyMainMenu::Initial_Conditions()
+{
+	panel2->Hide();
+	panel4->Hide();
+	panel6->Hide();
+	panel7->Hide();
+	button3->Hide();
+	button9->Hide();
+	refreshData_Overview_Table();
+}
+
 inline System::Void Prototype_Model::MyMainMenu::button1_Click(System::Object^ sender, System::EventArgs^ e) {
 	Application::Exit();
 }
@@ -27,30 +38,83 @@ inline System::Void Prototype_Model::MyMainMenu::button6_Click(System::Object^ s
 	}
 }
 
-inline System::Void Prototype_Model::MyMainMenu::OnFlowLayoutPanelMouseWheel(Object^ sender, MouseEventArgs^ e) {
-
-}
-
-inline System::Void Prototype_Model::MyMainMenu::button4_Click(System::Object^ sender, System::EventArgs^ e) {
-	//TODO: Open edit task tab
+inline System::Void Prototype_Model::MyMainMenu::button5_Click(System::Object^ sender, System::EventArgs^ e) {
 	listBox1->Items->Clear();
 
 	if (panel6->Visible) {
 		panel6->Hide();
+		button9->Hide();
+		button3->Hide();
 	}
 	else {
 		panel6->BringToFront();
 		panel6->Show();
-		refreshData_Overview_Table();
+		button9->BringToFront();
+		button9->Show();
+		button3->BringToFront();
+		button3->Show();
 	}
 
-	refreshData_remove_list();
+	button9->Enabled = false;
+	button3->Enabled = false;
+	refreshData_Overview_Table();
+	refreshData_editremove_list();
+}
+
+inline System::Void Prototype_Model::MyMainMenu::listBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (listBox1->SelectedIndex == -1) {
+		button9->Enabled = false;
+		button3->Enabled = false;
+	}
+	else {
+		button9->Enabled = true;
+		button3->Enabled = true;
+	}
+}
+
+inline System::Void Prototype_Model::MyMainMenu::button9_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (panel7->Visible) {
+		panel7->Hide();
+	}
+	else {
+		panel5->Enabled = false;
+		panel7->Show();
+		panel7->BringToFront();
+	}
+
+	//TODO: Get the value of index selected in listbox
+	// Take the index of that to getFromFile
+	textBox3->Text = marshal_as<String^>(task_file.getParsedFromFile('|', (listBox1->SelectedIndex * 4) + 2));
+	textBox4->Text = marshal_as<String^>(task_file.getParsedFromFile('|', (listBox1->SelectedIndex * 4) + 3));
+}
+
+inline System::Void Prototype_Model::MyMainMenu::button4_Click(System::Object^ sender, System::EventArgs^ e) {
+	String^ title = textBox3->Text;
+	String^ des = textBox4->Text;
+	String^ start = dateTimePicker4->Value.ToString("MMMM dd, hh:mm:tt");
+	String^ end = dateTimePicker5->Value.ToString("MMMM dd, hh:mm:tt");
+	std::string data = marshal_as<std::string>(System::String::Concat(start, "|", end, "|", title, "|", des, "|"));
+
+	task_file.insertToFile(data, listBox1->SelectedIndex);
+	panel5->Enabled = true;
+
+	refreshData_editremove_list();
+	refreshData_Overview_Table();
+	refreshData_Visual_Chart();
+
+	panel7->Hide();
+}
+
+inline System::Void Prototype_Model::MyMainMenu::button10_Click(System::Object^ sender, System::EventArgs^ e) {
+	panel5->Enabled = true;
+	panel7->Hide();
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button3_Click_1(System::Object^ sender, System::EventArgs^ e) {
 	listBox1->Items->RemoveAt(listBox1->SelectedIndex);
-	task_file.removeFromFile(listBox1->SelectedIndex+1);
-	refreshData_remove_list();
+	task_file.removeFromFile(listBox1->SelectedIndex + 1);
+
+	refreshData_editremove_list();
 	refreshData_Overview_Table();
 	refreshData_Visual_Chart();
 }
@@ -158,8 +222,8 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Visual_Chart() {
 		int pos11 = timeSetted.find(',');
 		int pos22 = timeSetted.find(':');
 		int pos33 = timeSetted.find('|');
-		String^ final1 = marshal_as<String^>(timeSetted.substr(static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(pos11) + 1, pos22 - (static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(pos11) + 1)))->Trim();
-		String^ final2 = marshal_as<String^>(timeSetted.substr(static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(pos22) + 1, pos33 - (static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(pos22) + 1)))->Trim();
+		String^ final1 = marshal_as<String^>(timeSetted.substr((pos11)+1, pos22 - (pos11 + 1)))->Trim();
+		String^ final2 = marshal_as<String^>(timeSetted.substr((pos22)+1, pos33 - (pos22 + 1)))->Trim();
 		int timeS = Convert::ToInt16(final1);
 		if (final2 == "pm")
 			timeS += 12;
@@ -220,7 +284,7 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Overview_Table() {
 	}
 }
 
-inline System::Void Prototype_Model::MyMainMenu::refreshData_remove_list() {
+inline System::Void Prototype_Model::MyMainMenu::refreshData_editremove_list() {
 	listBox1->Items->Clear();
 	for (int i = 1; i < task_file.getLineNum(); i++) {
 		String^ task = marshal_as<String^>(task_file.getFromFile(i))->Replace("|", "\t\t\t");
