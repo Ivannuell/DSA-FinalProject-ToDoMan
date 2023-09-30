@@ -21,7 +21,6 @@ namespace $safeprojectname$ {
 			//
 			//TODO: Add the constructor code here
 			//
-			
 		}
 
 	protected:

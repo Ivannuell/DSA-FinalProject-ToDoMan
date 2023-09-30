@@ -7,11 +7,12 @@ public:
 		filename = databaseFilename;
 	}
 
-	bool addToFile(const std::string& message);
-	std::string getFromFile(const int);
+	bool addToFile(const std::string& data);
+	std::string getFromFile(int);
 	std::string getParsedFromFile(const char, int);
 	int getLineNum();
 	void removeFromFile(int);
+	void insertToFile(const std::string& data, int);
 
 private:
 	std::string filename;
