@@ -9,10 +9,5 @@ void Prototype_Model::individual_Task::setTitle(std::string title) {
 }
 
 void Prototype_Model::individual_Task::setTime(int hour){
-	panel2->Left += hour * 80;
-	label1->Left += hour * 80;
-}
-
-void Prototype_Model::individual_Task::setDuration(int hour){
-	panel2->Width += hour * 80;
+	panel2->Left += hour * 45;
 }

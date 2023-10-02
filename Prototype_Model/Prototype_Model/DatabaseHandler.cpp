@@ -3,40 +3,35 @@
 #include <vector>
 #include <fstream>
 
-bool DatabaseHandler::addToFile(const std::string& data)
+bool DatabaseHandler::addToFile(const std::string& message)
 {
 	std::fstream output;
 	output.open(filename, std::ios::app);
 	if (output.fail())
 		return false;
-	output << data;
-
+	output << message;
+	//output << message << std::endl;
 	output.close();
 	return true;
 }
 
-std::string DatabaseHandler::getFromFile(int lines)
+std::string DatabaseHandler::getFromFile(const int lines)
 {
 	std::fstream input;
 	std::string in;
 	input.open(filename);
 	int i = 1;
 
-	if (lines > this->getLineNum()) {
-		lines = this->getLineNum();
-	}
-
 	while (1) {
 		std::getline(input, in);
 		if (in == "") continue;
 		if (i == lines) {
-			break;
+			input.close();
+			return in;
 		}
 		i++;
 	}
-	input.close();
-	return in;
-
+	
 }
 
 std::string DatabaseHandler::getParsedFromFile(const char delim, int pos) {
@@ -47,7 +42,6 @@ std::string DatabaseHandler::getParsedFromFile(const char delim, int pos) {
 		std::getline(input, out, delim);
 	}
 	std::getline(input, out, delim);
-
 	input.close();
 	return out;
 }
@@ -71,14 +65,13 @@ void DatabaseHandler::removeFromFile(int line_number)
 	std::fstream read_file;
 	read_file.open(filename);
 	if (read_file.fail()) {
-		return; //TODO: return something that would notify that something is wrong
+		System::Windows::Forms::MessageBox::Show("Error Loading file");
 	}
 	std::vector<std::string> lines;
 	std::string line;
 
 	while (getline(read_file, line))
 		lines.push_back(line);
-
 	read_file.close();
 
 	std::ofstream write_file;
@@ -86,33 +79,6 @@ void DatabaseHandler::removeFromFile(int line_number)
 
 	for (int i = 0; i < lines.size(); i++)
 		if (i != line_number)
-			write_file << lines[i] << std::endl;
-
-	write_file.close();
-}
-
-void DatabaseHandler::insertToFile(const std::string& data, int line_number)
-{
-	std::fstream read_file;
-	read_file.open(filename);
-	if (read_file.fail()) {
-		return; //TODO: return something that would notify that something is wrong
-	}
-	std::vector<std::string> lines;
-	std::string line;
-
-	while (getline(read_file, line))
-		lines.push_back(line);
-
-	read_file.close();
-
-	std::ofstream write_file;
-	write_file.open(filename);
-
-	for (int i = 0; i < lines.size(); i++)
-		if (i == line_number)
-			write_file << data << std::endl;
-		else
 			write_file << lines[i] << std::endl;
 
 	write_file.close();
