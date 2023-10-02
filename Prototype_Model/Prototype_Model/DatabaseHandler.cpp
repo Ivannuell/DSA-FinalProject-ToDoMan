@@ -71,6 +71,7 @@ void DatabaseHandler::removeFromFile(int line_number)
 	std::fstream read_file;
 	read_file.open(filename);
 	if (read_file.fail()) {
+		System::Windows::Forms::MessageBox::Show("Error in reading file");
 		return; //TODO: return something that would notify that something is wrong
 	}
 	std::vector<std::string> lines;
@@ -96,7 +97,8 @@ void DatabaseHandler::insertToFile(const std::string& data, int line_number)
 	std::fstream read_file;
 	read_file.open(filename);
 	if (read_file.fail()) {
-		return; //TODO: return something that would notify that something is wrong
+		//return; //TODO: return something that would notify that something is wrong
+		System::Windows::Forms::MessageBox::Show("Error in reading file");
 	}
 	std::vector<std::string> lines;
 	std::string line;
