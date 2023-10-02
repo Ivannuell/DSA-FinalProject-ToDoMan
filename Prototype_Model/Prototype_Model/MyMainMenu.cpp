@@ -3,9 +3,13 @@
 #include "EditTask.h"
 #include <msclr/marshal_cppstd.h>
 #include "individual_Task.h"
+#include "Sort_File.h"
 
 using namespace msclr::interop;
+
 DatabaseHandler task_file{ ".\\Database\\Task.txt" };
+DatabaseHandler task_parameter_file{ ".\\Database\\TaskParameters.txt" };
+Sort_File task_sort_file{ ".\\Database\\Task.txt" };
 
 System::Void Prototype_Model::MyMainMenu::Initial_Conditions()
 {
@@ -13,8 +17,9 @@ System::Void Prototype_Model::MyMainMenu::Initial_Conditions()
 	panel4->Hide();
 	panel6->Hide();
 	panel7->Hide();
-	button3->Hide();
+	panel8->Hide();
 	button9->Hide();
+	button3->Hide();
 	refreshData_Overview_Table();
 }
 
@@ -45,8 +50,10 @@ inline System::Void Prototype_Model::MyMainMenu::button5_Click(System::Object^ s
 		panel6->Hide();
 		button9->Hide();
 		button3->Hide();
+		button5->Text = "Edit Task";
 	}
 	else {
+		button5->Text = "Overview";
 		panel6->BringToFront();
 		panel6->Show();
 		button9->BringToFront();
@@ -110,6 +117,51 @@ inline System::Void Prototype_Model::MyMainMenu::button10_Click(System::Object^ 
 	panel7->Hide();
 }
 
+inline System::Void Prototype_Model::MyMainMenu::dateTimePicker4_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
+	// Get the selected start date and time
+	System::DateTime startDateTime = dateTimePicker4->Value;
+
+	// Get the selected end date and time
+	System::DateTime endDateTime = dateTimePicker4->Value;
+
+	// Ensure that the start time is not earlier than the current date and time
+	if (startDateTime < System::DateTime::Now)
+	{
+		// Set the startDateTime to the current date and time
+		startDateTime = System::DateTime::Now;
+		dateTimePicker4->Value = startDateTime;
+	}
+
+	// Ensure that the start time is not greater than the end time
+	if (startDateTime > endDateTime)
+	{
+		// Set the startDateTime to be equal to the endDateTime
+		startDateTime = endDateTime;
+		dateTimePicker4->Value = startDateTime;
+	}
+}
+
+inline System::Void Prototype_Model::MyMainMenu::dateTimePicker1_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
+	System::DateTime startDateTime = dateTimePicker1->Value;
+
+	System::DateTime endDateTime = dateTimePicker1->Value;
+
+	if (endDateTime <= startDateTime)
+	{
+		dateTimePicker1->Value = endDateTime;
+	}
+}
+
+inline System::Void Prototype_Model::MyMainMenu::button11_Click(System::Object^ sender, System::EventArgs^ e) {
+
+
+}
+
+inline System::Void Prototype_Model::MyMainMenu::button12_Click(System::Object^ sender, System::EventArgs^ e) {
+	task_sort_file.sortByDateHour();
+	refreshData_Overview_Table();
+}
+
 inline System::Void Prototype_Model::MyMainMenu::button3_Click_1(System::Object^ sender, System::EventArgs^ e) {
 	listBox1->Items->RemoveAt(listBox1->SelectedIndex);
 	task_file.removeFromFile(listBox1->SelectedIndex + 1);
@@ -120,18 +172,27 @@ inline System::Void Prototype_Model::MyMainMenu::button3_Click_1(System::Object^
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button7_Click(System::Object^ sender, System::EventArgs^ e) {
-
 	String^ title = textBox1->Text;
 	String^ descrip = textBox2->Text;
 	String^ timeEnd = dateTimePicker1->Value.ToString("MMMM dd, hh:mm:tt");
 	String^ timeStart = dateTimePicker2->Value.ToString("MMMM dd, hh:mm:tt");
 	std::string data = marshal_as<std::string>(System::String::Concat(timeStart, "|", timeEnd, "|", title, "|", descrip, "|", "\n"));
 
+	String^ subject = textBox5->Text;
+	String^ Importance = Convert::ToString(getValue_Importance());
+	String^ Difficulty = Convert::ToString(getValue_Difficulty());
+	std::string parameter = marshal_as<std::string>(System::String::Concat(subject, "|", Importance, "|", Difficulty, "|", "\n"));
+
 	if (
 		!task_file.addToFile(data)
-		) {
+		)
 		MessageBox::Show("Something went wrong while writing to file.");
-	}
+
+	if (
+		!task_parameter_file.addToFile(parameter)
+		)
+		MessageBox::Show("Something went wrong while writing to file.");
+
 	panel5->Enabled = true;
 	panel4->Hide();
 
@@ -142,6 +203,7 @@ inline System::Void Prototype_Model::MyMainMenu::button7_Click(System::Object^ s
 inline System::Void Prototype_Model::MyMainMenu::button8_Click(System::Object^ sender, System::EventArgs^ e) {
 	panel5->Enabled = true;
 	panel4->Hide();
+	refreshData_Overview_Table();
 }
 
 inline System::Void Prototype_Model::MyMainMenu::dateTimePicker3_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
@@ -156,14 +218,16 @@ inline System::Void Prototype_Model::MyMainMenu::button2_Click(System::Object^ s
 		panel5->Enabled = false;
 		button2->Enabled = true;
 	}
+
+
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button3_Click(System::Object^ sender, System::EventArgs^ e) {
 	tableLayoutPanel1->Controls->Clear();
 
+	System::Windows::Forms::Label^ display_output = gcnew System::Windows::Forms::Label();
 	for (int i = 0; i < (task_file.getLineNum() * 4) - 4; i++) {
 		tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 25)));
-		System::Windows::Forms::Label^ display_output = gcnew System::Windows::Forms::Label();
 		String^ var1 = marshal_as<String^>(task_file.getParsedFromFile('|', i));
 
 		display_output->Text = (var1->Trim());
@@ -183,25 +247,31 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Visual_Chart() {
 	flowLayoutPanel1->Controls->Add(panel3);  //Container of hours
 	String^ h_num;
 	//Hour labels being added
-	for (int i = 0; i < 24; i++) {
+	int j = 0;
+	for (int i = 12; j < 24; i = (i % 12) + 1) {
 		Label^ hour = gcnew Label();
 		hour->AutoSize = false;
 		hour->Margin = System::Windows::Forms::Padding(0);
 		hour->Size = System::Drawing::Size(80, 40);
 		hour->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-		hour->Location = System::Drawing::Point(80 * i, 4);
-		if (i < 12)
-			h_num = System::String::Concat((i + 1), ":00", " AM");
-		else
-			h_num = System::String::Concat((i - 11), ":00", " PM");
+		hour->Location = System::Drawing::Point(80 * j, 4);
 
+		if (j < 12)
+			h_num = System::String::Concat(i, ":00", " AM");
+		else
+			h_num = System::String::Concat(i, ":00", " PM");
 
 		hour->Text = h_num;
 		hour->TextAlign = System::Drawing::ContentAlignment::BottomCenter;
 		panel3->Controls->Add(hour);
+		j++;
 	}
 
 	// Adding the custom task gant chart item.
+
+	//listBox2->Items->Clear(); // DEBUGING CODEk+
+	String^ debug = "";
+
 	for (int i = 2; i < (task_file.getLineNum() * 4) - 4; i += 4) {
 		individual_Task^ userControl = gcnew individual_Task();
 		userControl->setTitle(task_file.getParsedFromFile('|', i)); // third value - Title
@@ -223,41 +293,68 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Visual_Chart() {
 		int pos22 = timeSetted.find(':');
 		int pos33 = timeSetted.find('|');
 		String^ final1 = marshal_as<String^>(timeSetted.substr((pos11)+1, pos22 - (pos11 + 1)))->Trim();
-		String^ final2 = marshal_as<String^>(timeSetted.substr((pos22)+1, pos33 - (pos22 + 1)))->Trim();
+		String^ final2 = marshal_as<String^>(timeSetted.substr((pos22)+4, pos33 - (pos22 + 1)))->Trim();
 		int timeS = Convert::ToInt16(final1);
 		if (final2 == "pm")
 			timeS += 12;
+
+		String^ debug1 = String::Concat("final2 (287): ", Convert::ToString(final2));
+		String^ debug2 = String::Concat("timeS (288): ", Convert::ToString(timeS));
+
 
 		//Deadline - The hour where the task will end
 		int pos1 = deadline.find(',');
 		int pos2 = deadline.find(':');
 		int pos3 = deadline.find('|');
 		String^ final = marshal_as<String^>(deadline.substr(pos1 + 1, pos2 - (pos1 + 1)))->Trim();
-		String^ final3 = marshal_as<String^>(deadline.substr(pos2 + 1, pos3 - (pos2 + 1)))->Trim();
+		String^ final3 = marshal_as<String^>(deadline.substr(pos2 + 4, pos3 - (pos2 + 1)))->Trim();
 		int timeF = Convert::ToInt16(final);
 		if (final3 == "pm")
 			timeF += 12;
 
-		int duration;
-		bool isSettedPM = (timeS >= 12);
-		bool isEndPM = (timeF >= 12);
-
-		if (isSettedPM && !isEndPM) {
-			duration = (timeF + 12) - timeS;
-		}
-		else if (!isSettedPM && isEndPM) {
-			duration = (timeF + 12) - timeS;
-		}
-		else {
-			duration = timeF - timeS;
-		}
-
-		if (duration < 0) {
-			duration += 24;
-		}
+		String^ debug3 = String::Concat("final3 (301): ", Convert::ToString(final3));
+		String^ debug4 = String::Concat("timeF (302): ", Convert::ToString(timeF - 1));
 
 
-		userControl->setTime(timeS - 1);
+		int jj = 1;
+		for (int i = 12; jj < 13; i = (i % 12) + 1) // Loop from 12 to 1
+		{
+			if (timeS == i && final2 == "am" && final3 == "am")
+			{
+				timeS = jj - 1;
+				break;
+			}
+			if (timeS == i && final2 == "am" && final3 == "pm")
+			{
+				timeS = jj + 12; // Adjust for PM
+				break;
+			}
+			if (timeS == i && final2 == "pm" && final3 == "pm")
+			{
+				timeS = jj + 12; // Adjust for PM
+				break;
+			}
+			jj++;
+		}
+		if (timeS == 12 && final2 == "am" && final3 == "pm")
+		{
+			timeS = 0;
+		}
+
+		if (timeS == 12 && final2 == "pm" && final3 == "pm")
+		{
+			timeS = 12;
+		}
+
+		int duration = timeF - timeS;
+
+		String^ debug5 = String::Concat("timeS if(311): ", Convert::ToString(timeS));
+		String^ debug6 = String::Concat("duration (324): ", Convert::ToString(duration));
+
+
+		//listBox2->Items->Add(String::Concat(debug1, "\t\t", debug2, "\t\t", debug3, "\t\t", debug4, "\t\t", debug5, "\t\t", debug6));
+
+		userControl->setTime(timeS);
 		userControl->setDuration(duration);
 
 		if (month == value_M && day == value_D)
@@ -270,15 +367,14 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Overview_Table() {
 
 	for (int i = 0; i < (task_file.getLineNum() * 4) - 4; i++) {
 		tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 25)));
-		System::Windows::Forms::Label^ display_output = gcnew System::Windows::Forms::Label();
-
 		String^ var1 = marshal_as<String^>(task_file.getParsedFromFile('|', i));
 
-		display_output->Text = (var1->Trim());
+		System::Windows::Forms::Label^ display_output = gcnew System::Windows::Forms::Label();
 		display_output->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 		display_output->Font = gcnew System::Drawing::Font("Arial", 10);
 		display_output->Anchor = AnchorStyles::Left;
 		display_output->AutoSize = true;
+		display_output->Text = (var1->Trim());
 
 		tableLayoutPanel1->Controls->Add(display_output);
 	}
@@ -291,3 +387,23 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_editremove_list() {
 		listBox1->Items->Add(task);
 	}
 }
+
+int Prototype_Model::MyMainMenu::getValue_Importance()
+{
+	if (radioButton1->Checked) return 1;
+	else if (radioButton2->Checked) return 2;
+	else if (radioButton3->Checked) return 3;
+	else if (radioButton4->Checked) return 4;
+	else if (radioButton5->Checked) return 5;
+}
+
+int Prototype_Model::MyMainMenu::getValue_Difficulty()
+{
+	if (radioButton10->Checked) return 1;
+	else if (radioButton9->Checked) return 2;
+	else if (radioButton8->Checked) return 3;
+	else if (radioButton7->Checked) return 4;
+	else if (radioButton6->Checked) return 5;
+}
+
+
