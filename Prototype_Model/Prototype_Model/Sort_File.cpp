@@ -16,6 +16,16 @@ struct Task {
 	std::string taskDescription;
 };
 
+struct Parameter {
+	std::string startDateTime;
+	std::string endDateTime;
+	std::string taskName;
+	std::string taskDescription;
+	std::string subject;
+	std::string difficulty;
+	std::string importance;
+};
+
 Task parseLine(const std::string& line) {
 	Task task;
 	std::istringstream iss(line);
@@ -26,35 +36,110 @@ Task parseLine(const std::string& line) {
 	return task;
 }
 
+Parameter parseLine_param(const std::string& line) {
+	Parameter para;
+	std::istringstream iss(line);
+	std::getline(iss, para.startDateTime, '|'); 
+	std::getline(iss, para.endDateTime, '|'); 
+	std::getline(iss, para.taskName, '|'); 
+	std::getline(iss, para.taskDescription, '|');
+	std::getline(iss, para.subject, '|');
+	std::getline(iss, para.difficulty, '|');
+	std::getline(iss, para.importance, '|');
+	return para;
+}
+
 bool compareTasks(const Task& task1, const Task& task2) {
 	return task1.startDateTime < task2.startDateTime;
 }
 
-void Sort_File::sortByDateHour()
+bool compareTasks_param(const Parameter& task1, const Parameter& task2) {
+	return task1.difficulty < task2.difficulty;
+}
+
+bool compareTasks_param_imp(const Parameter& task1, const Parameter& task2) {
+	return task1.importance < task2.importance;
+}
+
+void Sort_File::sortByDifficulty()
 {
-	std::ifstream inputFile(this->filename);
+	std::ifstream inputFile(".\\Database\\TaskParameters.txt");
 	if (!inputFile) {
 		return;
 	}
 
-	std::vector<Task> tasks; 
-	std::string line; 
+	std::vector<Parameter> param;
+	std::string line;
 
-	while (std::getline(inputFile, line)) { 
-		tasks.push_back(parseLine(line)); 
+	while (std::getline(inputFile, line)) {
+		param.push_back(parseLine_param(line));
 	}
 
-	std::sort(tasks.begin(), tasks.end(), compareTasks);
-	inputFile.close(); 
+	std::sort(param.begin(), param.end(), compareTasks_param);
 
-	std::ofstream outputFile(filename);
+	std::ofstream outputFile(".\\Database\\TaskParameters.txt");
 	if (!outputFile) {
 		return;
 	}
 
-	for (const Task& task : tasks) {
-		outputFile << task.startDateTime << "|" << task.endDateTime << "|"
-			<< task.taskName << "|" << task.taskDescription << "|" << std::endl;
+	for (const Parameter& para : param) {
+		outputFile << para.startDateTime << "|" << para.endDateTime << "|" << para.taskName << "|" << para.taskDescription << "|" << para.subject << "|" << para.difficulty << "|" << para.importance << "|" << std::endl;
+	}
+
+	outputFile.close();
+}
+
+void Sort_File::sortByDate()
+{
+	std::ifstream inputFile(".\\Database\\Task.txt");
+	if (!inputFile) {
+		return;
+	}
+
+	std::vector<Task> param;
+	std::string line;
+
+	while (std::getline(inputFile, line)) {
+		param.push_back(parseLine(line));
+	}
+
+	std::sort(param.begin(), param.end(), compareTasks);
+
+	std::ofstream outputFile(".\\Database\\Task.txt");
+	if (!outputFile) {
+		return;
+	}
+
+	for (const Task& para : param) {
+		outputFile << para.startDateTime << "|" << para.endDateTime << "|" << para.taskName << "|" << para.taskDescription << "|" << std::endl; 
+	}
+
+	outputFile.close();
+}
+
+void Sort_File::sortByImportance()
+{
+	std::ifstream inputFile(".\\Database\\TaskParameters.txt");
+	if (!inputFile) {
+		return;
+	}
+
+	std::vector<Parameter> param;
+	std::string line;
+
+	while (std::getline(inputFile, line)) {
+		param.push_back(parseLine_param(line));
+	}
+
+	std::sort(param.begin(), param.end(), compareTasks_param_imp);
+
+	std::ofstream outputFile(".\\Database\\TaskParameters.txt");
+	if (!outputFile) {
+		return;
+	}
+
+	for (const Parameter& para : param) {
+		outputFile << para.startDateTime << "|" << para.endDateTime << "|" << para.taskName << "|" << para.taskDescription << "|" << para.subject << "|" << para.difficulty << "|" << para.importance << "|" << std::endl;
 	}
 
 	outputFile.close();

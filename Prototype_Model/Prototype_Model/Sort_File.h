@@ -7,7 +7,9 @@ class Sort_File
 {
 public:
 	Sort_File(std::string filename);
-	void sortByDateHour();
+	void sortByDate();
+	void sortByImportance();
+	void sortByDifficulty();
 
 private: 
 	std::string filename;
