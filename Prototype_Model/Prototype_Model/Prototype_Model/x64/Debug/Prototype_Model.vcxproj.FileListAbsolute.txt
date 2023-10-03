@@ -1,0 +1,17 @@
+C:\Users\Ivann\source\repos\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.vcxproj.AssemblyReference.cache
+C:\Users\Ivann\source\repos\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.EditTask.resources
+C:\Users\Ivann\source\repos\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.individual_Task.resources
+C:\Users\Ivann\source\repos\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.MyForm.resources
+C:\Users\Ivann\source\repos\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.MyMainMenu.resources
+C:\Users\Ivann\source\repos\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.vcxproj.GenerateResource.cache
+C:\Users\Ivann\Documents\School Related\Data struct\Final Project\Project Repo\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.vcxproj.AssemblyReference.cache
+C:\Users\Ivann\Documents\School Related\Data struct\Final Project\Project Repo\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.EditTask.resources
+C:\Users\Ivann\Documents\School Related\Data struct\Final Project\Project Repo\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.individual_Task.resources
+C:\Users\Ivann\Documents\School Related\Data struct\Final Project\Project Repo\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.MyForm.resources
+C:\Users\Ivann\Documents\School Related\Data struct\Final Project\Project Repo\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.MyMainMenu.resources
+C:\Users\Ivann\Documents\School Related\Data struct\Final Project\Project Repo\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.vcxproj.GenerateResource.cache
+C:\Users\Ivann\source\repos\DSA-FinalProject-ToDoMan\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.vcxproj.AssemblyReference.cache
+C:\Users\Ivann\source\repos\DSA-FinalProject-ToDoMan\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.individual_Task.resources
+C:\Users\Ivann\source\repos\DSA-FinalProject-ToDoMan\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.MyForm.resources
+C:\Users\Ivann\source\repos\DSA-FinalProject-ToDoMan\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.MyMainMenu.resources
+C:\Users\Ivann\source\repos\DSA-FinalProject-ToDoMan\Prototype_Model\Prototype_Model\x64\Debug\Prototype_Model.vcxproj.GenerateResource.cache
