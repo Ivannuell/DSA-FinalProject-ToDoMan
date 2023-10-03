@@ -4,7 +4,6 @@
 #include <msclr/marshal_cppstd.h>
 #include "individual_Task.h"
 #include "Sort_File.h"
-#include "Task_summary.h"
 
 using namespace msclr::interop;
 
@@ -19,15 +18,13 @@ System::Void Prototype_Model::MyMainMenu::Initial_Conditions()
 	panel6->Hide();
 	panel7->Hide();
 	panel8->Hide();
-	panel13->Hide();
 	button9->Hide();
 	button3->Hide();
 	refreshData_Overview_Table();
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button1_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (MessageBox::Show("Are you sure you want to exit?", "Confirmation", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes)
-		Application::Exit();
+	Application::Exit();
 }
 
 inline System::Void Prototype_Model::MyMainMenu::MyMainMenu_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
@@ -35,13 +32,12 @@ inline System::Void Prototype_Model::MyMainMenu::MyMainMenu_FormClosing(System::
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button6_Click(System::Object^ sender, System::EventArgs^ e) {
+
 	if (panel2->Visible) {
 		flowLayoutPanel1->Controls->Clear();
 		panel2->Hide();
-		panel13->Hide();
 	}
 	else {
-		panel13->Show();
 		panel2->Show();
 		refreshData_Visual_Chart();
 	}
@@ -49,7 +45,6 @@ inline System::Void Prototype_Model::MyMainMenu::button6_Click(System::Object^ s
 
 inline System::Void Prototype_Model::MyMainMenu::button5_Click(System::Object^ sender, System::EventArgs^ e) {
 	listBox1->Items->Clear();
-	panel8->Hide();
 
 	if (panel6->Visible) {
 		panel6->Hide();
@@ -87,7 +82,6 @@ inline System::Void Prototype_Model::MyMainMenu::listBox1_SelectedIndexChanged(S
 inline System::Void Prototype_Model::MyMainMenu::button9_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (panel7->Visible) {
 		panel7->Hide();
-		panel8->Hide();
 	}
 	else {
 		panel5->Enabled = false;
@@ -106,17 +100,9 @@ inline System::Void Prototype_Model::MyMainMenu::button4_Click(System::Object^ s
 	String^ des = textBox4->Text;
 	String^ start = dateTimePicker4->Value.ToString("MMMM dd, hh:mm:tt");
 	String^ end = dateTimePicker5->Value.ToString("MMMM dd, hh:mm:tt");
-
-	String^ Subject = textBox6->Text;
-	int Importance = getValue_Importance_edit();
-	int Difficulty = getValue_Difficulty_edit();
-
-
 	std::string data = marshal_as<std::string>(System::String::Concat(start, "|", end, "|", title, "|", des, "|"));
-	std::string parameter = marshal_as<std::string>(System::String::Concat(start, "|", end, "|", title, "|", des, "|", Subject, "|", Importance, "|", Difficulty, "|"));
 
 	task_file.insertToFile(data, listBox1->SelectedIndex);
-	task_parameter_file.insertToFile(parameter, listBox1->SelectedIndex);
 	panel5->Enabled = true;
 
 	refreshData_editremove_list();
@@ -132,7 +118,27 @@ inline System::Void Prototype_Model::MyMainMenu::button10_Click(System::Object^ 
 }
 
 inline System::Void Prototype_Model::MyMainMenu::dateTimePicker4_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
+	// Get the selected start date and time
+	System::DateTime startDateTime = dateTimePicker4->Value;
 
+	// Get the selected end date and time
+	System::DateTime endDateTime = dateTimePicker4->Value;
+
+	// Ensure that the start time is not earlier than the current date and time
+	if (startDateTime < System::DateTime::Now)
+	{
+		// Set the startDateTime to the current date and time
+		startDateTime = System::DateTime::Now;
+		dateTimePicker4->Value = startDateTime;
+	}
+
+	// Ensure that the start time is not greater than the end time
+	if (startDateTime > endDateTime)
+	{
+		// Set the startDateTime to be equal to the endDateTime
+		startDateTime = endDateTime;
+		dateTimePicker4->Value = startDateTime;
+	}
 }
 
 inline System::Void Prototype_Model::MyMainMenu::dateTimePicker1_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
@@ -147,44 +153,62 @@ inline System::Void Prototype_Model::MyMainMenu::dateTimePicker1_ValueChanged(Sy
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button11_Click(System::Object^ sender, System::EventArgs^ e) {
-	panel8->Show();
-	panel8->BringToFront();
+
+
 }
 
 inline System::Void Prototype_Model::MyMainMenu::button12_Click(System::Object^ sender, System::EventArgs^ e) {
-	task_sort_file.sortByDate();
+	task_sort_file.sortByDateHour();
 	refreshData_Overview_Table();
-	refreshData_editremove_list();
-	panel8->Hide();
 }
 
-inline System::Void Prototype_Model::MyMainMenu::button14_Click(System::Object^ sender, System::EventArgs^ e) {
+inline System::Void Prototype_Model::MyMainMenu::button2_MouseHover(System::Object^ sender, System::EventArgs^ e) {
+
 }
 
-inline System::Void Prototype_Model::MyMainMenu::button13_Click(System::Object^ sender, System::EventArgs^ e) {
-	task_sort_file.sortByDifficulty();
-	refreshData_Visual_summary();
+inline System::Void Prototype_Model::MyMainMenu::button2_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
+	button2->BackColor = System::Drawing::Color::Yellow;
+
 }
 
-inline System::Void Prototype_Model::MyMainMenu::button14_Click_1(System::Object^ sender, System::EventArgs^ e) {
-	flowLayoutPanel1->BringToFront();
+inline System::Void Prototype_Model::MyMainMenu::button2_DragLeave(System::Object^ sender, System::EventArgs^ e) {
+	button2->BackColor = System::Drawing::Color::Orange;
 }
 
-inline System::Void Prototype_Model::MyMainMenu::button15_Click(System::Object^ sender, System::EventArgs^ e) {
-	refreshData_Visual_summary();
-	flowLayoutPanel2->BringToFront();
+inline System::Void Prototype_Model::MyMainMenu::button2_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+	button2->BackColor = System::Drawing::Color::DarkOrange;
 }
 
-inline System::Void Prototype_Model::MyMainMenu::button16_Click(System::Object^ sender, System::EventArgs^ e) {
-	task_sort_file.sortByImportance();
-	refreshData_Visual_summary();
+inline System::Void Prototype_Model::MyMainMenu::button5_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
+	button5->BackColor = System::Drawing::Color::Yellow;
 }
+
+inline System::Void Prototype_Model::MyMainMenu::button5_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+	button5->BackColor = System::Drawing::Color::DarkOrange;
+
+}
+
+inline System::Void Prototype_Model::MyMainMenu::button6_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
+	button6->BackColor = System::Drawing::Color::Yellow;
+}
+
+inline System::Void Prototype_Model::MyMainMenu::button6_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+	button6->BackColor = System::Drawing::Color::DarkOrange;
+}
+
+inline System::Void Prototype_Model::MyMainMenu::button11_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
+	button11->BackColor = System::Drawing::Color::Yellow;
+}
+
+inline System::Void Prototype_Model::MyMainMenu::button11_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+	button11->BackColor = System::Drawing::Color::DarkOrange;
+}
+
+
 
 inline System::Void Prototype_Model::MyMainMenu::button3_Click_1(System::Object^ sender, System::EventArgs^ e) {
-
-	task_file.removeFromFile(listBox1->SelectedIndex);
-	task_parameter_file.removeFromFile(listBox1->SelectedIndex);
 	listBox1->Items->RemoveAt(listBox1->SelectedIndex);
+	task_file.removeFromFile(listBox1->SelectedIndex + 1);
 
 	refreshData_editremove_list();
 	refreshData_Overview_Table();
@@ -201,7 +225,7 @@ inline System::Void Prototype_Model::MyMainMenu::button7_Click(System::Object^ s
 	String^ subject = textBox5->Text;
 	String^ Importance = Convert::ToString(getValue_Importance());
 	String^ Difficulty = Convert::ToString(getValue_Difficulty());
-	std::string parameter = marshal_as<std::string>(System::String::Concat(timeStart, "|", timeEnd, "|", title, "|", descrip, "|", subject, "|", Importance, "|", Difficulty, "|", "\n"));
+	std::string parameter = marshal_as<std::string>(System::String::Concat(subject, "|", Importance, "|", Difficulty, "|", "\n"));
 
 	if (
 		!task_file.addToFile(data)
@@ -235,9 +259,6 @@ inline System::Void Prototype_Model::MyMainMenu::button2_Click(System::Object^ s
 		panel4->BringToFront();
 		panel4->Show();
 		panel6->Hide();
-		panel8->Hide();
-		button9->Hide();
-		button3->Hide();
 		panel5->Enabled = false;
 		button2->Enabled = true;
 	}
@@ -248,8 +269,8 @@ inline System::Void Prototype_Model::MyMainMenu::button2_Click(System::Object^ s
 inline System::Void Prototype_Model::MyMainMenu::button3_Click(System::Object^ sender, System::EventArgs^ e) {
 	tableLayoutPanel1->Controls->Clear();
 
+	System::Windows::Forms::Label^ display_output = gcnew System::Windows::Forms::Label();
 	for (int i = 0; i < (task_file.getLineNum() * 4) - 4; i++) {
-		System::Windows::Forms::Label^ display_output = gcnew System::Windows::Forms::Label();
 		tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 25)));
 		String^ var1 = marshal_as<String^>(task_file.getParsedFromFile('|', i));
 
@@ -385,24 +406,6 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Visual_Chart() {
 	}
 }
 
-System::Void Prototype_Model::MyMainMenu::refreshData_Visual_summary()
-{
-	flowLayoutPanel2->Controls->Clear();
-
-	for (int i = 0; i < (task_parameter_file.getLineNum() * 7) - 7; i += 7) {
-		Task_summary^ taskSum = gcnew Task_summary;
-
-		taskSum->setTitle(marshal_as<String^>(task_parameter_file.getParsedFromFile('|', i + 2))->Trim());
-		taskSum->setDescri(marshal_as<String^>(task_parameter_file.getParsedFromFile('|', i + 3))->Trim());
-		taskSum->setStart(marshal_as<String^>(task_parameter_file.getParsedFromFile('|', i + 0))->Trim());
-		taskSum->setEnt(marshal_as<String^>(task_parameter_file.getParsedFromFile('|', i + 1))->Trim());
-		taskSum->setDif(Convert::ToInt32(marshal_as<String^>(task_parameter_file.getParsedFromFile('|', i + 5))->Trim()));
-		taskSum->setImportance(Convert::ToInt32(marshal_as<String^>(task_parameter_file.getParsedFromFile('|', i + 6))->Trim()));
-
-		flowLayoutPanel2->Controls->Add(taskSum);
-	}
-}
-
 inline System::Void Prototype_Model::MyMainMenu::refreshData_Overview_Table() {
 	tableLayoutPanel1->Controls->Clear();
 
@@ -423,7 +426,6 @@ inline System::Void Prototype_Model::MyMainMenu::refreshData_Overview_Table() {
 
 inline System::Void Prototype_Model::MyMainMenu::refreshData_editremove_list() {
 	listBox1->Items->Clear();
-
 	for (int i = 1; i < task_file.getLineNum(); i++) {
 		String^ task = marshal_as<String^>(task_file.getFromFile(i))->Replace("|", "\t\t\t");
 		listBox1->Items->Add(task);
@@ -437,7 +439,6 @@ int Prototype_Model::MyMainMenu::getValue_Importance()
 	else if (radioButton3->Checked) return 3;
 	else if (radioButton4->Checked) return 4;
 	else if (radioButton5->Checked) return 5;
-	else return 0;
 }
 
 int Prototype_Model::MyMainMenu::getValue_Difficulty()
@@ -447,27 +448,6 @@ int Prototype_Model::MyMainMenu::getValue_Difficulty()
 	else if (radioButton8->Checked) return 3;
 	else if (radioButton7->Checked) return 4;
 	else if (radioButton6->Checked) return 5;
-	else return 0;
-}
-
-int Prototype_Model::MyMainMenu::getValue_Importance_edit()
-{
-	if (radioButton20->Checked) return 1;
-	else if (radioButton19->Checked) return 2;
-	else if (radioButton18->Checked) return 3;
-	else if (radioButton17->Checked) return 4;
-	else if (radioButton16->Checked) return 5;
-	else return 0;
-}
-
-int Prototype_Model::MyMainMenu::getValue_Difficulty_edit()
-{
-	if (radioButton15->Checked) return 1;
-	else if (radioButton14->Checked) return 2;
-	else if (radioButton13->Checked) return 3;
-	else if (radioButton12->Checked) return 4;
-	else if (radioButton11->Checked) return 5;
-	else return 0;
 }
 
 
