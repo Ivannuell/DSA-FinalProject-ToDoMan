@@ -131,6 +131,9 @@
     <ClCompile Include="individual_Task.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="MyMainMenu.cpp" />
+    <ClCompile Include="Sort.cpp" />
+    <ClCompile Include="Sort_File.cpp" />
+    <ClCompile Include="Task_summary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DatabaseHandler.h" />
@@ -146,6 +149,8 @@
     <ClInclude Include="MyMainMenu.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Sort_File.h" />
+    <ClInclude Include="Task_summary.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EditTask.resx">
